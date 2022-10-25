@@ -2,6 +2,8 @@ import numpy as ny
 import moviepy.editor as mp
 from weblfasr import RequestApi
 import cv2
+import face_recognition
+
 
 l_get = []
 # 第一部分，输入视频，将视频中的音频提取出来
