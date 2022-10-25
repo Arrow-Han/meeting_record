@@ -4,7 +4,7 @@ from weblfasr import RequestApi
 import cv2
 
 l_get = []
-# 第一部分，输入视频，将3视频中的音频提取出来
+# 第一部分，输入视频，将视频中的音频提取出来
 def extract_audio(videos_file_path):
     my_clip = mp.VideoFileClip(videos_file_path)
     return my_clip

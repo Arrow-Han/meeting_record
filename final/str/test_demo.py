@@ -1,5 +1,6 @@
 import cv2
 import face_recognition
+import numpy as np
 
 
 # 好像是可以直接导入的
