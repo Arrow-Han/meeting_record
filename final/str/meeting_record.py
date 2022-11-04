@@ -4,8 +4,9 @@ from weblfasr import RequestApi
 import cv2
 import face_recognition
 
-
 l_get = []
+
+
 # 第一部分，输入视频，将视频中的音频提取出来
 def extract_audio(videos_file_path):
     my_clip = mp.VideoFileClip(videos_file_path)
@@ -37,8 +38,10 @@ def get_txt(audio_file_path):
 def multi_face_recognition():
     print(l_get)
     print('hanxinjiang')
+
     def nothing():
         pass
+
     video_capture = cv2.VideoCapture("../document/mp4_outpyut_test-video.mp4")
     frames_of_video = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT))
     loop_flag = 0
@@ -60,3 +63,4 @@ if __name__ == "__main__":
     get_txt(file_path_audio)
 
     # part03
+    input_path = r"../document/speaker_man.png"
