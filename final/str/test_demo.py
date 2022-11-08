@@ -121,7 +121,7 @@ def multi_face_recognition():
 def video_to_frames(video_path, outputDirName):
     times = 0
 
-    #提取视频的帧率，每1帧提取一个
+    # 提取视频的帧率，每1帧提取一个
     frame_frequency = 1
 
     # if no path,create
@@ -141,6 +141,35 @@ def video_to_frames(video_path, outputDirName):
             cv2.imwrite(outputDirName + '\\' + str(times) + '.jpg', image)
     print('图片提取结束')
     videos.release()
+
+
+# 对视频进行抽帧处理
+# extract_frame方法的入参分别为：
+# 输入视频地址、输出视频地址、视频fps、视频分辨率宽、视频分辨率高、视频需要抽掉的起始帧、视频需要抽掉的结束帧。
+# 下面是使用opencv对视频中间几帧抽取的方法。
+# 主要的思路是在读取frame的时候，顺便把帧写下来。
+# 同时如果不是需要抽取剔除的帧，直接continue到下个循环。
+# 样例代码如下，主要按照MP4格式进行处理。
+def extract_frame(video_path: str, result_path: str, fps, weight, height, start, end):
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    videoWriter = cv2.VideoWriter(result_path, fourcc, fps, (weight, height))
+    vc = cv2.VideoCapture(video_path)
+    if vc.isOpened():
+        ret, frame = vc.read()
+    else:
+        ret = False
+    count = 0  # count the number of pictures
+    while ret:
+        ret, frame = vc.read()
+        if start <= count <= end:
+            count += 1
+            continue
+        else:
+            videoWriter.write(frame)
+            count += 1
+    print(count)
+    videoWriter.release()
+    vc.release()
 
 
 if __name__ == '__main__':
