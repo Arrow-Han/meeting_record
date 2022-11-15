@@ -52,15 +52,16 @@ def multi_face_recognition():
 
 
 if __name__ == "__main__":
-    # part01
-    file_path = r'../document/mp4_output_test-video.mp4'
-    my_clip = extract_audio(file_path)
-    my_clip.audio.write_audiofile(f'../document/video_output.mp3')
-
-    # part02
-    file_path_audio = r'../document/video_output.mp3'
-    # part03调用之后有return也可以，本函数调用可以省略
-    get_txt(file_path_audio)
+    # 11-15 already right，please note off while using
+    # # part01
+    # file_path = r'../document/mp4_output_test-video.mp4'
+    # my_clip = extract_audio(file_path)
+    # my_clip.audio.write_audiofile(f'../document/video_output.mp3')
+    #
+    # # part02
+    # file_path_audio = r'../document/video_output.mp3'
+    # # part03调用之后有return也可以，本函数调用可以省略
+    # get_txt(file_path_audio)
 
     # part03
     input_path = r"../document/speaker_man.png"

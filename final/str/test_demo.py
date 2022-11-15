@@ -176,9 +176,9 @@ if __name__ == '__main__':
     input_dir = r'../document'
     save_dir = r'../document'
     count = 0
-    for video_name in os.listdir(input_dir):
-        video_path = os.path.join(input_dir, video_name)
-        outPutDirName = os.path.join(save_dir, video_name[:-4])
-        threading.Thread(target=video_to_frames, args=(video_path, outPutDirName)).start()
-        count = count + 1
-        print('%s th videos has been finished !!!' % count)
+# for video_name in os.listdir(input_dir):
+#     video_path = os.path.join(input_dir, video_name)
+#     outPutDirName = os.path.join(save_dir, video_name[:-4])
+#     threading.Thread(target=video_to_frames, args=(video_path, outPutDirName)).start()
+#     count = count + 1
+#     print('%s th videos has been finished !!!' % count)
