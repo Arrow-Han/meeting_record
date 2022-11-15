@@ -15,11 +15,11 @@ def multi_face_recognition():
     # 说话检测
     def mouse_detect(top, bottom):
         if (bottom[3][1] - top[3][1]) >= 22:
-            name = 'open'
+            name_status = 'open'
         else:
-            name = 'close'
+            name_status = 'close'
 
-        return name
+        return name_status
 
     video_capture = cv2.VideoCapture("../document/mp4_outpyut_test-video.mp4")
     frames_of_video = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT))
