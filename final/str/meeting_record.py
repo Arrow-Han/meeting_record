@@ -1,6 +1,7 @@
 import numpy as ny
 import moviepy.editor as mp
 from weblfasr import RequestApi
+from speaker_recognition import video_to_frame_use
 import cv2
 import face_recognition
 
@@ -29,8 +30,8 @@ def get_txt(audio_file_path):
     with open('../document/result_txt.txt', 'r', encoding='utf-8') as f:
         s = f.read()
         l_mid = eval(eval(s)['data'])
-        global l_get
-        l_get = l_mid
+        # global l_get
+        # l_get = l_mid
 
 
 # 第三部分，导入人脸识别模块，进行人脸识别
@@ -63,5 +64,35 @@ if __name__ == "__main__":
     # # part03调用之后有return也可以，本函数调用可以省略
     # get_txt(file_path_audio)
 
-    # part03
+    # part03 video to frame
+    video_to_frame_use()
+
+    # part04 人脸识别以及进行张嘴检测部分模型调用
+
     input_path = r"../document/speaker_man.png"
+    with open('../document/result_txt.txt', 'r', encoding='utf-8') as f:
+        s = f.read()
+        l_mid = eval(eval(s)['data'])
+        print(l_mid)
+        print(type(l_mid))
+        l_get = l_mid
+
+    print(l_get)
+    print(type(l_get))
+    print('-------')
+    # for i in l_get:
+    #     print(i)
+    #     begin_tm = i['bg']
+    #     end_tm = i['ed']
+    #     print(begin_tm,end_tm)
+    test_i = l_get[1]
+    print(test_i)
+    begin_tm = int(test_i['bg'])
+    end_tm = int(test_i['ed'])
+    print(begin_tm, type(begin_tm), end_tm, type(end_tm))
+
+
+
+
+
+

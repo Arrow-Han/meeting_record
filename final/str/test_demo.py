@@ -7,8 +7,6 @@ import threading
 
 # 好像是可以直接导入的
 def multi_face_recognition():
-    print('hanxinjiang')
-
     def nothing():
         pass
 
@@ -117,32 +115,6 @@ def multi_face_recognition():
 
     return 000
 
-
-def video_to_frames(video_path, outputDirName):
-    times = 0
-
-    # 提取视频的帧率，每1帧提取一个
-    frame_frequency = 1
-
-    # if no path,create
-    if not os.path.exists(outputDirName):
-        os.makedirs(outputDirName)
-
-    # read frames
-    videos = cv2.VideoCapture(video_path)
-
-    while True:
-        times = times + 1
-        res, image = videos.read()
-        if not res:
-            print('not res, not image')
-            break
-        if times % frame_frequency == 0:
-            cv2.imwrite(outputDirName + '\\' + str(times) + '.jpg', image)
-    print('图片提取结束')
-    videos.release()
-
-
 # 对视频进行抽帧处理
 # extract_frame方法的入参分别为：
 # 输入视频地址、输出视频地址、视频fps、视频分辨率宽、视频分辨率高、视频需要抽掉的起始帧、视频需要抽掉的结束帧。
@@ -170,15 +142,3 @@ def extract_frame(video_path: str, result_path: str, fps, weight, height, start,
     print(count)
     videoWriter.release()
     vc.release()
-
-
-if __name__ == '__main__':
-    input_dir = r'../document'
-    save_dir = r'../document'
-    count = 0
-# for video_name in os.listdir(input_dir):
-#     video_path = os.path.join(input_dir, video_name)
-#     outPutDirName = os.path.join(save_dir, video_name[:-4])
-#     threading.Thread(target=video_to_frames, args=(video_path, outPutDirName)).start()
-#     count = count + 1
-#     print('%s th videos has been finished !!!' % count)
