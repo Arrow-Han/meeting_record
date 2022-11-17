@@ -2,6 +2,7 @@ import cv2
 import face_recognition
 import os
 import threading
+import numpy as np
 
 
 def video_to_frames(video_path, outputDirName):
@@ -45,4 +46,51 @@ def video_to_frame_use():
 
 def multi_speaker_reg():
     print('begin')
+
+    def nothing(emp):
+        pass
+
+    # Load a sample picture and learn how to recognize it.
+    no01_image = face_recognition.load_image_file("../../docu/speaker_man.png")
+    no01_face_encoding = face_recognition.face_encodings(no01_image)[0]
+
+    # Load a second sample picture and learn how to recognize it.
+    no02_image = face_recognition.load_image_file("../../docu/speaker_woman.png")
+    no02_face_encoding = face_recognition.face_encodings(no02_image)[0]
+    # Create arrays of known face encodings and their names
+    known_face_encodings = [
+        no01_face_encoding,
+        no02_face_encoding
+    ]
+    known_face_names = [
+        "man",
+        "woman"
+    ]
+
+    # 初始化张嘴状态为闭嘴
+    mouth_status_open = 0
+
+    def getFaceEncoding(src):
+        image = face_recognition.load_image_file(src)  # 加载人脸图片
+        # 获取图片人脸定位[(top,right,bottom,left )]
+        face_locations = face_recognition.face_locations(image)
+        img_ = image[face_locations[0][0]:face_locations[0][2], face_locations[0][3]:face_locations[0][1]]
+        img_ = cv2.cvtColor(img_, cv2.COLOR_BGR2RGB)
+        # display(img_)
+        face_encoding = face_recognition.face_encodings(image, face_locations)[0]  # 对人脸图片进行编码
+        return face_encoding
+
+    def simcos(a, b):
+        a = np.array(a)
+        b = np.array(b)
+        dist = np.linalg.norm(a - b)  # 二范数
+        sim = 1.0 / (1.0 + dist)  #
+        return sim
+    def comparison(face_src1, face_src2):
+        xl1 = getFaceEncoding(face_src1)
+        xl2 = getFaceEncoding(face_src2)
+        value = simcos(xl1, xl2)
+        print(value)
+
+
 
