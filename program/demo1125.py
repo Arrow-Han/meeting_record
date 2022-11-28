@@ -1,29 +1,28 @@
-# 人脸比对模型
-# 显示说话状态是在此基础上新增的
-import face_recognition
 import cv2
+import face_recognition
 import numpy as np
 
-
+# 本demo是针对视频而言，但是缺点在于好像只能一帧一帧进行检测，有点慢
+# 同时，11月25日下午还未解决每个人分别识别张嘴的问题
 def nothing(emp):
     pass
-
 
 # Get a reference to webcam #0 (the default one)
 
 
-video_capture = cv2.VideoCapture("../../docu/test_video.MOV")
+video_capture = cv2.VideoCapture("docu/test_video_output.mp4")
 frames_of_video = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT))
 loop_flag = 0
 pos = 0
 cv2.createTrackbar('time', 'demo_video', 0, frames_of_video, nothing)
 
 # Load a sample picture and learn how to recognize it.
-man_image = face_recognition.load_image_file("../../docu/speaker_man.png")
+# docu/speaker_man.png 相对路径
+man_image = face_recognition.load_image_file("docu/speaker_man.png")
 man_face_encoding = face_recognition.face_encodings(man_image)[0]
 
 # Load a second sample picture and learn how to recognize it.
-woman_image = face_recognition.load_image_file("../../docu/speaker_woman.png")
+woman_image = face_recognition.load_image_file("docu/speaker_woman.png")
 woman_face_encoding = face_recognition.face_encodings(woman_image)[0]
 
 # Create arrays of known face encodings and their names
@@ -40,11 +39,11 @@ known_face_names = [
 # 说话检测
 def mouse_detect(top, bottom):
     if (bottom[3][1] - top[3][1]) >= 22:
-        name = 'open'
+        state = 'open'
     else:
-        name = 'close'
+        state = 'close'
 
-    return name
+    return state
 
 
 fras = 0
@@ -72,9 +71,15 @@ while True:
     # 获取嘴唇的点位
     for landmarks in face_landmarks_list:
         top_lip = landmarks['top_lip']
-        print(top_lip)
+        # print(top_lip)
         bottom_lip = landmarks['bottom_lip']
-        print(bottom_lip)
+        color = (255, 0, 0)
+        thickness = 2
+        cv2.rectangle(frame, top_lip[0], bottom_lip[0], color, thickness)
+        
+        
+        
+        # print(bottom_lip)
     # Loop through each face in this frame of video
     for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
         # See if the face is a match for the known face(s)
@@ -102,7 +107,7 @@ while True:
         cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
 
         # 在名字下方显示speaker的说话状态
-        mouse_state = str(mouse_detect(top_lip, bottom_lip))
+        mouse_state = 'open'
         cv2.rectangle(frame, (left, bottom + 30), (right, bottom), (0, 0, 255), cv2.FILLED)
         cv2.putText(frame, mouse_state, (left, bottom + 30), font, 1.0, (255, 0, 0), 2, cv2.LINE_AA)
 
