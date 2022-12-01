@@ -11,6 +11,7 @@ def nothing(emp):
 
 
 video_capture = cv2.VideoCapture("docu/test_video_output.mp4")
+
 frames_of_video = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT))
 loop_flag = 0
 pos = 0
